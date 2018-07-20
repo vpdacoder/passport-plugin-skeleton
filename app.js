@@ -21,6 +21,7 @@ app.use(passport.session());
 
 
 // for encoding and decoding sessions
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -71,12 +72,14 @@ app.get('/login',(req,res)=> {
   res.render('login');
 });
 
+ // Login logic
+ // Middleware
+ app.post('/login',passport.authenticate("local",{
+   successRedirect: "/secret",
+   failureRedirect: "/login"
+ }),(req,res)=>{
 
-
-
-
-
-
+ });
 
 
 app.listen(3000, (req,res) =>{
